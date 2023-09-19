@@ -1,0 +1,13 @@
+{
+  "type": "commonjs",
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "elliptic": "^6.5.4",
+    "i": "^0.3.7",
+    "npm": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.1.2",
+    "@types/elliptic": "^6.4.14"
+  }
+}

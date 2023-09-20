@@ -11,9 +11,12 @@ const myWalletAddress = myKey.getPublic("hex");
 
 const astraCoin = new Blockchain();
 
-const tx1 = new Transaction(myWalletAddress, "publick key goes here", 10);
-tx1.signTransaction(myKey);
-astraCoin.addTransaction(tx1);
+const tr1 = new Transaction(myWalletAddress, "12345", 10);
+const tr2 = new Transaction(myWalletAddress, "12345", 90);
+tr1.signTransaction(myKey);
+tr2.signTransaction(myKey)
+astraCoin.addTransaction(tr1);
+astraCoin.addTransaction(tr2)
 
 console.log("\n Starting the miner...");
 astraCoin.minePendingTransactions(myWalletAddress);
@@ -22,3 +25,10 @@ console.log(
   `\n Balance of [${myWalletAddress}] is`,
   astraCoin.getBalanceOfAddress(myWalletAddress)
 );
+
+console.log(
+  `\n Balance of [12345] is`,
+  astraCoin.getBalanceOfAddress('12345')
+);
+
+console.log(JSON.stringify(astraCoin,null,4))

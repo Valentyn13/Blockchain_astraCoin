@@ -22,8 +22,8 @@ export default class Transaction {
       throw new Error("You cannot sign transactions of other wallets!");
     }
 
-    const hashTx = this.calculateHash();
-    const sig = signinKey.sign(hashTx, "base64");
+    const hashTr = this.calculateHash();
+    const sig = signinKey.sign(hashTr, "base64");
     this.signature = sig.toDER("hex");
   }
 

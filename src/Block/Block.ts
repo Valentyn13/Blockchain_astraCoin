@@ -17,6 +17,7 @@ export default class Block {
     this.previousHash = previousHash;
     this.hash = this.calculateHash();
     this.nonce = 0;
+    
   }
 
   calculateHash() {
@@ -39,8 +40,8 @@ export default class Block {
   }
 
   hasValidTransactions() {
-    for (const tx of this.transacions) {
-      if (!tx.isValid()) {
+    for (const tr of this.transacions) {
+      if (!tr.isValid()) {
         return false;
       }
     }

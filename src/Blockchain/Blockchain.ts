@@ -26,15 +26,15 @@ export default class Blockchain {
   }
 
   minePendingTransactions(miningRewardAddress: string) {
-    const rewardTx = new Transaction(
+    const rewardTr = new Transaction(
       null,
       miningRewardAddress,
       this.miningReward
     );
-    this.pendingTransactions.push(rewardTx);
+    this.pendingTransactions.push(rewardTr);
 
     const block = new Block(Date.now(), this.pendingTransactions);
-    block.previousHash = this.chain[this.chain.length - 1].hash;
+    block.previousHash = this.getLatesBlock().hash;
     block.mineBlock(this.difficulty);
 
     console.log("Block successfully mined!");

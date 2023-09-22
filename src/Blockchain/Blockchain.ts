@@ -1,5 +1,6 @@
 import Block from "../Block/Block";
 import Transaction from "../Transaction/Transaction";
+import { astraCoin } from "../server/server";
 
 export default class Blockchain {
   chain: Block[];
@@ -17,6 +18,7 @@ export default class Blockchain {
 
   createGenesisBlock() {
     return new Block(
+      0,
       Date.now(),
       [new Transaction("*Genesis block*", "*Genesis block*", 0)],
       "PVO"
@@ -39,7 +41,7 @@ export default class Blockchain {
     );
     this.pendingTransactions.push(rewardTr);
 
-    const block = new Block(Date.now(), this.pendingTransactions);
+    const block = new Block( astraCoin.getLatesBlock().index + 1,Date.now(), this.pendingTransactions);
     block.previousHash = this.getLatesBlock().hash;
     block.mineBlock(this.difficulty);
 

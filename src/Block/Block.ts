@@ -2,16 +2,19 @@ import SHA256 from "crypto-js/sha256.js";
 import Transaction from "../Transaction/Transaction";
 
 export default class Block {
+  index: number;
   timestamp: number;
   previousHash: string;
   transacions: Transaction[];
   nonce: number;
   hash: string;
   constructor(
+    index: number,
     timestamp: number,
     transacions: Transaction[],
     previousHash = ""
   ) {
+    this.index = index
     this.timestamp = timestamp;
     this.transacions = transacions;
     this.previousHash = previousHash;

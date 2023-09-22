@@ -3,6 +3,7 @@ import Transaction from "../Transaction/Transaction";
 
 export default class Blockchain {
   chain: Block[];
+  nodes: Set<string>
   difficulty: number;
   pendingTransactions: Transaction[];
   miningReward: number;
@@ -11,6 +12,7 @@ export default class Blockchain {
     this.difficulty = 4;
     this.pendingTransactions = [];
     this.miningReward = 100;
+    this.nodes = new Set()
   }
 
   createGenesisBlock() {
@@ -19,6 +21,10 @@ export default class Blockchain {
       [new Transaction("*Genesis block*", "*Genesis block*", 0)],
       "PVO"
     );
+  }
+
+  registerNewNode (node: string) {
+    this.nodes.add(node)
   }
 
   getLatesBlock() {

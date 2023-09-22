@@ -16,4 +16,9 @@ nodesRouter.post("/register", (req, res) => {
   }
 });
 
+nodesRouter.get('/getChain', (req,res) => {
+  const chain = astraCoin.chain
+  res.status(200).json(chain)
+})
+
 export default nodesRouter;

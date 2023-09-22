@@ -1,17 +1,20 @@
 import { Router } from "express";
 import { astraCoin } from "../../server";
+import { getCahinsOfAnotherNodes } from "../../helpers/node.helpers";
 
 const blockchainRouter: Router = Router();
 
-blockchainRouter.post("/mine", (req, res) => {
+blockchainRouter.post("/mine", async (req, res) => {
   const { rewardAddress } = req.body;
   try {
+    const allChains = await getCahinsOfAnotherNodes(astraCoin.nodes)
+    astraCoin.resolvConflict(allChains)
     astraCoin.minePendingTransactions(rewardAddress);
     res.status(200).json({
       chain: astraCoin.chain,
     });
   } catch (error) {
-    res.status(404).json(JSON.stringify({ error }));
+    res.status(404).json( error );
   }
 });
 

@@ -27,14 +27,15 @@ export default class Blockchain {
   }
 
   resolvConflict(nodesChain: Block[][]) {
-    const longestChain = nodesChain.reduce((acc, current, index) => {
+    const longestChain = nodesChain.reduce((acc, current) => {
       if (current.length > acc.length) {
         acc = current;
         return acc;
       }
       return acc;
     }, []);
-    this.chain = longestChain;
+     const isNewChainValid = Blockchain.isChainValid(longestChain)
+     if (isNewChainValid) this.chain = longestChain;
   }
 
   registerNewNode(node: string) {
@@ -91,10 +92,10 @@ export default class Blockchain {
     return balance;
   }
 
-  isChainValid() {
-    for (let i = 1; i < this.chain.length; i++) {
-      const currentBlock = this.chain[i];
-      const previousBlock = this.chain[i - 1];
+  static isChainValid(chain: Block[]) {
+    for (let i = 1; i < chain.length; i++) {
+      const currentBlock = chain[i];
+      const previousBlock = chain[i - 1];
 
       if (
         currentBlock.hash !==

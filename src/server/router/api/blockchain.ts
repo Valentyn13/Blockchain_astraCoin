@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { astraCoin } from "../../server";
 import { getCahinsOfAnotherNodes } from "../../helpers/node.helpers";
+import Blockchain from "../../../Blockchain/Blockchain";
 
 const blockchainRouter: Router = Router();
 
@@ -32,7 +33,7 @@ blockchainRouter.get("/balance/:id", (req, res) => {
 });
 
 blockchainRouter.get("/isChainValid", (req, res) => {
-  const isChainOk = astraCoin.isChainValid();
+  const isChainOk = Blockchain.isChainValid(astraCoin.chain);
   if (!isChainOk) res.status(500).json({ error: "Chain is not valid" });
   res.status(200).json('Chain is valid!')
 });

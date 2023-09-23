@@ -12,23 +12,31 @@ export default class Block {
     index: number,
     timestamp: number,
     transacions: Transaction[],
-    previousHash = ""
+    previousHash: string
   ) {
-    this.index = index
+    this.index = index;
     this.timestamp = timestamp;
     this.transacions = transacions;
     this.previousHash = previousHash;
-    this.hash = this.calculateHash();
     this.nonce = 0;
-    
+    this.hash = Block.calculateHash(
+      this.previousHash,
+      this.timestamp,
+      this.transacions,
+      this.nonce,
+      this.index
+    );
   }
 
-  calculateHash() {
+  static calculateHash(
+    prevHas: string,
+    timestamp: number,
+    transacions: Transaction[],
+    nonce: number,
+    index:number
+  ) {
     return SHA256(
-      this.previousHash +
-        this.timestamp +
-        JSON.stringify(this.transacions) +
-        this.nonce
+      prevHas + timestamp + JSON.stringify(transacions) + nonce  + index
     ).toString();
   }
 
@@ -37,7 +45,13 @@ export default class Block {
       this.hash.substring(0, difficulty) !== Array(difficulty + 1).join("0")
     ) {
       this.nonce++;
-      this.hash = this.calculateHash();
+      this.hash = Block.calculateHash(
+        this.previousHash,
+        this.timestamp,
+        this.transacions,
+        this.nonce,
+        this.index
+      );
     }
     console.log("Block mined: " + this.hash);
   }

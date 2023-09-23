@@ -40,7 +40,7 @@ http://localhost:4200/blockchain/balance/:id
 
 Example:
 
-http://localhost:4200/blockchain/balance/123 - this endpoin get the balance of 123 wallet
+http://localhost:4200/blockchain/balance/123 - this endpoin return the balance of 123 wallet
 ```
 
 ### Register node
@@ -54,9 +54,15 @@ body: {
 }
 ```
 
-### Get chain of a node
+### Get node's chain
 ```
 method: GET
 
 http://localhost:4200/node/getChain
+```
+### Is chain valid
+```
+method: GET
+
+http://localhost:4200/blockchain/isChainValid
 ```

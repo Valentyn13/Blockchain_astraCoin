@@ -4,7 +4,7 @@ import { astraCoin } from "../server/server";
 
 export default class Blockchain {
   chain: Block[];
-  nodes: Set<string>
+  nodes: Set<string>;
   difficulty: number;
   pendingTransactions: Transaction[];
   miningReward: number;
@@ -13,8 +13,8 @@ export default class Blockchain {
     this.difficulty = 4;
     this.pendingTransactions = [];
     this.miningReward = 100;
-    this.nodes = new Set()
-    this.nodes.add(`http://localhost:${process.argv[2]}`)
+    this.nodes = new Set();
+    this.nodes.add(`http://localhost:${process.argv[2]}`);
   }
 
   createGenesisBlock() {
@@ -26,20 +26,19 @@ export default class Blockchain {
     );
   }
 
-  resolvConflict (nodesChain: Block[][]) {
+  resolvConflict(nodesChain: Block[][]) {
     const longestChain = nodesChain.reduce((acc, current, index) => {
       if (current.length > acc.length) {
-        acc = current
-        return acc 
+        acc = current;
+        return acc;
       }
-      return acc
-
-    }, [])
-    this.chain = longestChain
+      return acc;
+    }, []);
+    this.chain = longestChain;
   }
 
-  registerNewNode (node: string) {
-    this.nodes.add(node)
+  registerNewNode(node: string) {
+    this.nodes.add(node);
   }
 
   getLatesBlock() {
@@ -54,8 +53,12 @@ export default class Blockchain {
     );
     this.pendingTransactions.push(rewardTr);
 
-    const block = new Block( astraCoin.getLatesBlock().index + 1,Date.now(), this.pendingTransactions);
-    block.previousHash = this.getLatesBlock().hash;
+    const block = new Block(
+      astraCoin.getLatesBlock().index + 1,
+      Date.now(),
+      this.pendingTransactions,
+      this.getLatesBlock().hash
+    );
     block.mineBlock(this.difficulty);
 
     console.log("Block successfully mined!");
@@ -93,7 +96,16 @@ export default class Blockchain {
       const currentBlock = this.chain[i];
       const previousBlock = this.chain[i - 1];
 
-      if (currentBlock.hash !== currentBlock.calculateHash()) {
+      if (
+        currentBlock.hash !==
+        Block.calculateHash(
+          currentBlock.previousHash,
+          currentBlock.timestamp,
+          currentBlock.transacions,
+          currentBlock.nonce,
+          currentBlock.index
+        )
+      ) {
         return false;
       }
 

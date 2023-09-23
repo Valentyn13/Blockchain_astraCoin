@@ -1,16 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+
 import Blockchain from '../Blockchain/Blockchain';
 import AppRouter from './router';
 
-const EC = require("elliptic").ec;
-const ec = new EC("secp256k1");
 const port  = process.argv[2]
-export const myKey = ec.keyFromPrivate(
-  "21354e36b4cc9d62221df1ce318b240940f30f8e23d39353bd473cab704d262f"
-);
-export const myWalletAddress = myKey.getPublic("hex");
+
+export const myWalletAddress = '13ce318b240940f30f8e23d393';
 export const astraCoin = new Blockchain();
 
 const app = express();

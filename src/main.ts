@@ -13,8 +13,6 @@ const astraCoin = new Blockchain();
 
 const tr1 = new Transaction(myWalletAddress, "12345", 10);
 const tr2 = new Transaction(myWalletAddress, "12345", 90);
-tr1.signTransaction(myKey);
-tr2.signTransaction(myKey)
 astraCoin.addTransaction(tr1);
 astraCoin.addTransaction(tr2)
 

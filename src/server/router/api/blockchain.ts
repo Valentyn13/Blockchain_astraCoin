@@ -30,7 +30,7 @@ blockchainRouter.get("/balance/:id", (req, res) => {
     res.status(404).json(JSON.stringify({ error }));
   }
 });
-
+// --------------------- надо переделать
 blockchainRouter.get("isChainValid", (req, res) => {
   const isChainOk = astraCoin.isChainValid();
   if (!isChainOk) res.status(500).json({ error: "Chain is not valid" });

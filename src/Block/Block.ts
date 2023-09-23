@@ -41,14 +41,4 @@ export default class Block {
     }
     console.log("Block mined: " + this.hash);
   }
-
-  hasValidTransactions() {
-    for (const tr of this.transacions) {
-      if (!tr.isValid()) {
-        return false;
-      }
-    }
-
-    return true;
-  }
 }

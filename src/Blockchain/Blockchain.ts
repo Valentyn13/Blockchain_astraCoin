@@ -14,7 +14,6 @@ export default class Blockchain {
     this.pendingTransactions = [];
     this.miningReward = 100;
     this.nodes = new Set();
-    this.nodes.add(`http://localhost:${process.argv[2]}`);
   }
 
   createGenesisBlock() {
@@ -27,15 +26,21 @@ export default class Blockchain {
   }
 
   resolvConflict(nodesChain: Block[][]) {
+    let isChanged = false
     const longestChain = nodesChain.reduce((acc, current) => {
-      if (current.length > acc.length) {
+      if (current.length > this.chain.length && current.length > acc.length) {
         acc = current;
+        isChanged = true
         return acc;
       }
       return acc;
     }, []);
      const isNewChainValid = Blockchain.isChainValid(longestChain)
      if (isNewChainValid) this.chain = longestChain;
+     return {
+      isChanged,
+      chan: this.chain
+     }
   }
 
   registerNewNode(node: string) {
